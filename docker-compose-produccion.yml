@@ -1,0 +1,29 @@
+# docker-compose-produccion.yml
+services:
+  app:
+    build: ./e-commerce
+    volumes:
+      - ./e-commerce:/e-commerce
+    ports:
+      - 8000:8000
+    env_file:
+      - .env-produccion
+    depends_on:
+      - mongo
+    command: gunicorn Ecommerce.wsgi:application --bind 0.0.0.0:8000
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./nginx/static:/var/www/static
+    ports:
+      - 80:80
+    depends_on:
+      - app

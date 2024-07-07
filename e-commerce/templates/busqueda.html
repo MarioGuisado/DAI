@@ -1,0 +1,36 @@
+{%extends "menu.html"%}
+{%load static%}
+{% block content %}
+<style>
+    .checked {
+        color: orange;
+    }
+
+    span:hover {
+        cursor: pointer;
+    }
+</style>
+<div class="container-fluid">
+    <div class="container text-center">
+        <div class="row align-items-start">
+            {% for producto in productos_busqueda%}
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="{% static producto.imágen %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{producto.nombre}}</h5>
+                        <p class="card-text">{{producto.descripción}}</p>
+                        <span class="sp" data-id="{{producto.id}}" data-nombre="{{producto.nombre}}"
+                            data-precio="{{producto.precio}}" data-descripcion="{{producto.descripción}}"
+                            data-categoria="{{producto.categoría}}" data-rating="{{producto.rating}}"></span>
+                        <p> Puntuación media de {{producto.rating.puntuación}} basada en {{producto.rating.cuenta}}
+                            reviews</p>
+                        <a href="#" class="btn btn-primary">Buy</a>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            <script src="{% static 'rating.js' %}"></script>
+        </div>
+    </div>
+    {% endblock %}
